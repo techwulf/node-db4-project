@@ -1,7 +1,12 @@
 const router = require('express').Router();
 
-router.use('*', (req, res, next) => {
-  res.json({api:'up'});
+const Recipe = require('./recipes-model');
+
+router.get('/:recipe_id', (req, res, next) => {
+  Recipe.getRecipeById(req.params.recipe_id)
+    .then(resources => {
+      res.status(200).json(resources);
+    });
 });
 
 router.use((err, req, res, next) => { // eslint-disable-line
